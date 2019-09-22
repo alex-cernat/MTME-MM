@@ -1,0 +1,16 @@
+packrat/lib*/
+.Rproj.user
+*.RData
+*.dta
+*.dat
+*.docx
+*.ini
+*.pdf
+*.tex
+*.aux
+*.bbl
+*.blg
+*.log
+*.gh5
+Mplus models/R&R models/old models.zip
+*.zip

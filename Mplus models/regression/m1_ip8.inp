@@ -1,0 +1,307 @@
+TITLE: Cross-sectional MTME ip wave 8 with mixed mode regression;
+DATA: FILE = "mtme_long.dat";
+VARIABLE: 
+NAMES = pidp G1T1_7 G1T2_7 G1T3_7 G1T4_7 G1T5_7 G1T6_7 G2T1_7 G2T2_7 G2T3_7 G2T4_7
+     G2T5_7 G2T6_7 G3T1_7 G3T2_7 G3T3_7 G3T4_7 G3T5_7 G3T6_7 G4T1_7 G4T2_7 G4T3_7
+     G4T4_7 G4T5_7 G4T6_7 G5T1_7 G5T2_7 G5T3_7 G5T4_7 G5T5_7 G5T6_7 G6T1_7 G6T2_7
+     G6T3_7 G6T4_7 G6T5_7 G6T6_7 G7T1_7 G7T2_7 G7T3_7 G7T4_7 G7T5_7 G7T6_7 G8T1_7
+     G8T2_7 G8T3_7 G8T4_7 G8T5_7 G8T6_7 G1T1_8 G1T2_8 G1T3_8 G1T4_8 G1T5_8 G1T6_8
+     G2T1_8 G2T2_8 G2T3_8 G2T4_8 G2T5_8 G2T6_8 G3T1_8 G3T2_8 G3T3_8 G3T4_8 G3T5_8
+     G3T6_8 G4T1_8 G4T2_8 G4T3_8 G4T4_8 G4T5_8 G4T6_8 G5T1_8 G5T2_8 G5T3_8 G5T4_8
+     G5T5_8 G5T6_8 G6T1_8 G6T2_8 G6T3_8 G6T4_8 G6T5_8 G6T6_8 G7T1_8 G7T2_8 G7T3_8
+     G7T4_8 G7T5_8 G7T6_8 G8T1_8 G8T2_8 G8T3_8 G8T4_8 G8T5_8 G8T6_8 G1T1_9
+     G1T2_9 G1T3_9 G1T4_9 G1T5_9 G1T6_9 G2T1_9 G2T2_9 G2T3_9 G2T4_9 G2T5_9 G2T6_9
+     G3T1_9 G3T2_9 G3T3_9 G3T4_9 G3T5_9 G3T6_9 G4T1_9 G4T2_9 G4T3_9 G4T4_9 G4T5_9
+     G4T6_9 G5T1_9 G5T2_9 G5T3_9 G5T4_9 G5T5_9 G5T6_9 G6T1_9 G6T2_9 G6T3_9 G6T4_9
+     G6T5_9 G6T6_9 G7T1_9 G7T2_9 G7T3_9 G7T4_9 G7T5_9 G7T6_9 G8T1_9 G8T2_9 G8T3_9
+     G8T4_9 G8T5_9 G8T6_9 dvage f2f7 female partner whitebrit rural degree
+     working present bidr_scores acq_young right left mem_score modew5 mtmmw7 mtmmw8
+     mtmmw9 f2f8 f2f9 modew8 modew9 newid; 
+MISSING=.;
+
+USEVARIABLE ARE
+     G1T1_8 G1T2_8 G1T3_8 G1T4_8 G1T5_8 
+     G1T6_8 G2T1_8 G2T2_8 G2T3_8 G2T4_8
+     G2T5_8 G2T6_8 G3T1_8 G3T2_8 G3T3_8 
+     G3T4_8 G3T5_8 G3T6_8 G4T1_8 G4T2_8 G4T3_8
+     G4T4_8 G4T5_8 G4T6_8 G5T1_8 G5T2_8 
+     G5T3_8 G5T4_8 G5T5_8 G5T6_8 G6T1_8 G6T2_8
+     G6T3_8 G6T4_8 G6T5_8 G6T6_8 G7T1_8 
+     G7T2_8 G7T3_8 G7T4_8 G7T5_8 G7T6_8 G8T1_8
+     G8T2_8 G8T3_8 G8T4_8 G8T5_8 G8T6_8
+     modew8;
+ 
+CATEGORICAL ARE
+  G1T1_8 G1T2_8 G1T3_8 G1T4_8 G1T5_8 G1T6_8 G2T1_8 G2T2_8 
+  G2T3_8 G2T4_8 G2T5_8 G2T6_8 G5T1_8 
+  G5T2_8 G5T3_8 G5T4_8 G5T5_8 G5T6_8 G6T1_8 G6T2_8 G6T3_8 
+  G6T4_8 G6T5_8 G6T6_8;
+ 
+AUXILIARY IS newid;
+
+Analysis:
+
+COVERAGE = 0;
+ESTIMATOR = BAYES;
+PROCESSORS = 4;
+BCONVERGENCE = 0.05;
+
+THIN = 100;
+FBITERATIONS = 10000; 
+BITERATIONS = 1000 0;
+
+BSEED = 201510;
+CHAINS = 4;
+BSEED = 201509;
+
+ALGORITHM = GIBBS(PX1);
+
+MODEL:
+
+ T1_8 BY G1T1_8@1 
+ G2T1_8@-1 
+ G3T1_8 (st_8) 
+ G4T1_8 (mst_8) 
+ G5T1_8@1 
+ G6T1_8@-1 
+ G7T1_8 (st_8) 
+ G8T1_8 (mst_8);
+
+
+T2_8 BY G1T2_8@1 
+ G2T2_8@-1 
+ G3T2_8 (st_8) 
+ G4T2_8 (mst_8) 
+ G5T2_8@1 
+ G6T2_8@-1 
+ G7T2_8 (st_8) 
+ G8T2_8 (mst_8);
+
+
+T3_8 BY G1T3_8@1 
+ G2T3_8@-1 
+ G3T3_8 (st_8) 
+ G4T3_8 (mst_8) 
+ G5T3_8@1 
+ G6T3_8@-1 
+ G7T3_8 (st_8) 
+ G8T3_8 (mst_8);
+
+
+T4_8 BY G1T4_8@1 
+ G2T4_8@-1 
+ G3T4_8 (st_8) 
+ G4T4_8 (mst_8) 
+ G5T4_8@1 
+ G6T4_8@-1 
+ G7T4_8 (st_8) 
+ G8T4_8 (mst_8);
+
+
+T5_8 BY G1T5_8@1 
+ G2T5_8@-1 
+ G3T5_8 (st_8) 
+ G4T5_8 (mst_8) 
+ G5T5_8@1 
+ G6T5_8@-1 
+ G7T5_8 (st_8) 
+ G8T5_8 (mst_8);
+
+
+T6_8 BY G1T6_8@1 
+ G2T6_8@-1 
+ G3T6_8 (st_8) 
+ G4T6_8 (mst_8) 
+ G5T6_8@1 
+ G6T6_8@-1 
+ G7T6_8 (st_8) 
+ G8T6_8 (mst_8);
+
+
+A_8 BY G1T1_8@1 
+G1T2_8@1 
+G1T3_8@1 
+G1T4_8@1 
+G1T5_8@1 
+G1T6_8@1 
+G2T1_8@1 
+G2T2_8@1 
+G2T3_8@1 
+G2T4_8@1 
+G2T5_8@1 
+G2T6_8@1 
+G3T1_8 (sa_8) 
+G3T2_8 (sa_8) 
+G3T3_8 (sa_8) 
+G3T4_8 (sa_8) 
+G3T5_8 (sa_8) 
+G3T6_8 (sa_8) 
+G4T1_8 (sa_8) 
+G4T2_8 (sa_8) 
+G4T3_8 (sa_8) 
+G4T4_8 (sa_8) 
+G4T5_8 (sa_8) 
+G4T6_8 (sa_8) 
+G5T1_8@-1 
+G5T2_8@-1 
+G5T3_8@-1 
+G5T4_8@-1 
+G5T5_8@-1 
+G5T6_8@-1 
+G6T1_8@-1 
+G6T2_8@-1 
+G6T3_8@-1 
+G6T4_8@-1 
+G6T5_8@-1 
+G6T6_8@-1 
+G7T1_8 (msa_8) 
+G7T2_8 (msa_8) 
+G7T3_8 (msa_8) 
+G7T4_8 (msa_8) 
+G7T5_8 (msa_8) 
+G7T6_8 (msa_8) 
+G8T1_8 (msa_8) 
+G8T2_8 (msa_8) 
+G8T3_8 (msa_8) 
+G8T4_8 (msa_8) 
+G8T5_8 (msa_8) 
+G8T6_8 (msa_8);
+
+
+S_8 BY G1T1_8@1 
+G1T2_8@1 
+G1T3_8@1 
+G1T4_8@1 
+G1T5_8@1 
+G1T6_8@1 
+G2T1_8@-1 
+G2T2_8@-1 
+G2T3_8@-1 
+G2T4_8@-1 
+G2T5_8@-1 
+G2T6_8@-1 
+G3T1_8 (ss_8) 
+G3T2_8 (ss_8) 
+G3T3_8 (ss_8) 
+G3T4_8 (ss_8) 
+G3T5_8 (ss_8) 
+G3T6_8 (ss_8) 
+G4T1_8 (mss_8) 
+G4T2_8 (mss_8) 
+G4T3_8 (mss_8) 
+G4T4_8 (mss_8) 
+G4T5_8 (mss_8) 
+G4T6_8 (mss_8) 
+G5T1_8@1 
+G5T2_8@1 
+G5T3_8@1 
+G5T4_8@1 
+G5T5_8@1 
+G5T6_8@1 
+G6T1_8@-1 
+G6T2_8@-1 
+G6T3_8@-1 
+G6T4_8@-1 
+G6T5_8@-1 
+G6T6_8@-1 
+G7T1_8 (ss_8) 
+G7T2_8 (ss_8) 
+G7T3_8 (ss_8) 
+G7T4_8 (ss_8) 
+G7T5_8 (ss_8) 
+G7T6_8 (ss_8) 
+G8T1_8 (mss_8) 
+G8T2_8 (mss_8) 
+G8T3_8 (mss_8) 
+G8T4_8 (mss_8) 
+G8T5_8 (mss_8) 
+G8T6_8 (mss_8);
+
+P11_8 BY  G3T1_8@1 G3T2_8@1 G3T3_8@1 G3T4_8@1 G3T5_8@1 G3T6_8@1 
+G4T1_8@1 G4T2_8@1 G4T3_8@1 G4T4_8@1 G4T5_8@1 G4T6_8@1 G7T1_8@1 
+G7T2_8@1 G7T3_8@1 G7T4_8@1 G7T5_8@1 G7T6_8@1 G8T1_8@1 G8T2_8@1 
+G8T3_8@1 G8T4_8@1 G8T5_8@1 G8T6_8@1 ;
+
+
+	[G3T1_8@0 G3T2_8@0 G3T3_8@0 G3T4_8@0 G3T5_8@0 G3T6_8@0 
+	G4T1_8@0 G4T2_8@0 G4T3_8@0 G4T4_8@0 G4T5_8@0 G4T6_8@0 
+	G7T1_8@0 G7T2_8@0 G7T3_8@0 G7T4_8@0 G7T5_8@0 G7T6_8@0 
+	G8T1_8@0 G8T2_8@0 G8T3_8@0 G8T4_8@0 G8T5_8@0 G8T6_8@0]; 
+
+	[G1T1_8$1@0 G1T2_8$1@0 G1T3_8$1@0 G1T4_8$1@0 G1T5_8$1@0 G1T6_8$1@0  
+	G2T1_8$1@0 G2T2_8$1@0 G2T3_8$1@0 G2T4_8$1@0 G2T5_8$1@0 G2T6_8$1@0  
+	G5T1_8$1@0 G5T2_8$1@0 G5T3_8$1@0 G5T4_8$1@0 G5T5_8$1@0 G5T6_8$1@0
+	G6T1_8$1@0 G6T2_8$1@0 G6T3_8$1@0 G6T4_8$1@0 G6T5_8$1@0 G6T6_8$1@0];
+
+	[T1_8 T2_8 T3_8 T4_8 T5_8 T6_8 A_8 S_8 P11_8];
+
+	T1_8-T6_8 (varf_8_1-varf_8_6);
+	P11_8 (varm_8);
+	S_8 (varsoc_8);
+	A_8 (varacq_8);
+
+	T1_8 WITH T2_8-T6_8 (cov1_8_2-cov1_8_6);
+	T2_8 WITH T3_8-T6_8 (cov2_8_3-cov2_8_6);
+	T3_8 WITH T4_8-T6_8 (cov3_8_4-cov3_8_6);
+	T4_8 WITH T5_8-T6_8 (cov4_8_5-cov4_8_6);
+	T5_8 WITH T6_8    (cov5_8_6);
+
+T1_8 WITH P11_8@0 S_8@0 A_8@0 ;
+T2_8 WITH P11_8@0 S_8@0 A_8@0 ;
+T3_8 WITH P11_8@0 S_8@0 A_8@0 ;
+T4_8 WITH P11_8@0 S_8@0 A_8@0 ;
+T5_8 WITH P11_8@0 S_8@0 A_8@0 ;
+T6_8 WITH P11_8@0 S_8@0 A_8@0 ;
+
+ P11_8 WITH S_8@0 A_8@0;
+ S_8 WITH A_8@0;
+
+
+
+! regression
+A_8 P11_8 S_8 ON modew8;
+
+MODEL PRIORS:
+  
+  varf_8_1-varf_8_6~IW(12, 10);
+  cov1_8_2-cov1_8_6~IW(0, 10);
+  cov2_8_3-cov2_8_6~IW(0, 10);
+  cov3_8_4-cov3_8_6~IW(0, 10);
+  cov4_8_5-cov4_8_6~IW(0, 10);
+  cov5_8_6~IW(0, 10);
+
+
+  varsoc_8~IG(2, 1);
+  varacq_8~IG(2, 1);
+  varm_8~IG(2, 1);
+
+  st_8~N(0, 100);
+  mst_8~N(0, 100);
+  COVARIANCE(st_8, mst_8)=-99.99;
+
+  sa_8~N(0, 100);
+  msa_8~N(0, 100);
+  COVARIANCE(sa_8, msa_8)=-99.99;
+
+  ss_8~N(0, 100);
+  mss_8~N(0, 100);
+  COVARIANCE(ss_8, mss_8)=-99.99;
+
+
+
+OUTPUT:
+	CINTERVAL STANDARDIZED(STDYX) RESIDUAL SVALUES
+	TECH1 TECH5 TECH8 TECH10 TECH16 TECH12 TECH16;
+
+SAVEDATA:
+
+  FILE IS m1_ip8_save.dat;
+  SAVE = FSCORES (20);
+  FACTORS = 
+  T1_8 T2_8 T3_8 T4_8 T5_8 P11_8 S_8 A_8;
+  SAVE = LRESPONSES (20);
+  BPARAMETERS = m1_ip8_par.dat;
+
+
+PLOT:
+  TYPE IS PLOT2;
