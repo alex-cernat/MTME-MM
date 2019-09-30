@@ -14,3 +14,4 @@ packrat/lib*/
 *.gh5
 Mplus models/R&R models/old models.zip
 *.zip
+*.html
