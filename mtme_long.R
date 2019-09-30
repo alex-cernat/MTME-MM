@@ -21,16 +21,7 @@
 
 # clear working space
 rm(list = ls())
-#
-# setwd(paste0("C:/Users/",
-#              Sys.getenv("USERNAME"),
-#              "/Dropbox (The University of Manchester)/Papers/Joe S/MTME-MM/"))
-#
-# .libPaths(
-#   c(paste0("C:/Users/",
-#            Sys.getenv("USERNAME"),
-#            "/Dropbox (The University of Manchester)/R/package"),
-#     .libPaths()))
+
 
 # load packages
 pkg <- c("haven", "tidyverse", "lavaan",
@@ -48,13 +39,14 @@ map(str_c("./functions/",
 
 # Load data ---------------------------------------------------------------
 
-# load results from models and cleaned data
+# load cleaned IP data from original paper
 
 load("./Data/ip7_clean.RData")
 load("Data/ip7_extra.RData")
 load("Data/ip8_clean.RData")
 load("Data/ip9_clean.RData")
 
+# rename variables
 mtmmip7 <- mtmm_ip7 %>%
   rename_at(vars(matches("G")),
             funs(str_c(., "_7")))
@@ -70,6 +62,7 @@ mtmmip9 <- mtmm_ip9 %>%
   dplyr::select(-newid)
 
 
+# bring all the variables together
 mtme_long <- mtmmip7 %>%
   full_join(mtmmip8, by = "pidp") %>%
   full_join(mtmmip9, by = "pidp") %>%
@@ -77,6 +70,7 @@ mtme_long <- mtmmip7 %>%
   mutate(newid = 1:nrow(.))
 
 
+# recode mode variables
 mtme_long <- mtme_long %>%
   mutate(modew5 = as.numeric(modew5) - 1,
          modew8 = as.numeric(modew8) - 1,
@@ -99,7 +93,9 @@ ip9 %>%
   tbl_df() %>%
   View()
 
-# get wave 7-9 data
+
+
+# get IP wave 7-9 data
 
 data_path <- list.files("./data/stata/",
                         pattern = "g_|h_|i_",
@@ -142,57 +138,12 @@ mtme_long_2 <- raw_data2 %>%
 
 
 
-
+# save data to mplus
 prepareMplusData(mtme_long, "./Data/mtme_long.dat")
 prepareMplusData(mtme_long_2, "./Data/mtme_long_2.dat")
 
+
+# save clean data
 save(mtme_long, file = "./Data/mtme_long.Rdata")
 
 
-mtme_long <- mtme_long %>%
-  rename(mm_7 = modew5,
-         mm_8 = modew8,
-         mm_9 = modew9,
-         f2f_7 = f2f7,
-         f2f_8 = f2f8,
-         f2f_9 = f2f9)
-
-
-
-cbind(count(mtme_long, mm_7),
-      count(mtme_long, mm_8),
-      count(mtme_long, mm_9))
-
-cbind(count(mtme_long, f2f_7),
-      count(mtme_long, f2f_8),
-      count(mtme_long, f2f_9))
-
-
-mtme_long2 <- mtme_long %>%
-  dplyr::select(pidp, matches("mm_"), matches("f2f"),
-         matches("g.t._"))
-
-colnames(mtme_long2)
-
-mtme_long2 <- as.data.frame(mtme_long2)
-
-mtme_super_long <-
-  reshape(
-    data = mtme_long2,
-    varying = 2:length(mtme_long2),
-    timevar = "wave",
-    sep = "_",
-    idvar = "pidp",
-    direction = "long"
-  ) %>%
-  tbl_df()
-
-
-mtme_super_long <- mtme_super_long %>%
-  mutate(wave_8 = ifelse(wave == 8, 1, 0),
-         wave_9 = ifelse(wave == 9, 1, 0),
-         newid = 1:nrow(.)) %>%
-  left_join(ip7_extra, by = "pidp")
-
-prepareMplusData(mtme_super_long, "./Data/mtme_super_long.dat")
-save(mtme_super_long, file = "./Data/mtme_super_long.Rdata")

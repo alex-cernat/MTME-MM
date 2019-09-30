@@ -5,21 +5,6 @@
 # clear working space
 rm(list = ls())
 
-setwd(paste0("C:/Users/",
-             Sys.getenv("USERNAME"),
-             "/Dropbox (The University of Manchester)/Papers/Joe S/MTME-MM/"))
-
-if(Sys.getenv("USERNAME") == "msassac6"){
-  .libPaths(c(
-    paste0(
-      "C:/Users/",
-      Sys.getenv("USERNAME"),
-      "/Dropbox (The University of Manchester)/R/package"
-    ),
-    .libPaths()
-  ))}
-
-
 
 # load packages
 pkg <- c("tidyverse", "MCMCpack", "MplusAutomation",
