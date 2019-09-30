@@ -7,10 +7,10 @@ The paper used the Understanding Society Innovation Panel waves 7, 8 and 9. The 
 The data was cleaned in R, exported and anlysed in Mplus, and the the results were reimported in R for making graphs and tables.
 
 There are two main R syntaxes:
-1. data_cleaning.R 
-2. posterior.R
+1. [data_cleaning.R](https://github.com/alex-cernat/MTME-MM/blob/master/data_cleaning.R)
+2. [posterior.R](https://github.com/alex-cernat/MTME-MM/blob/master/posterior.R)
 
-The Mplus models are in the folder "Mplus models".
+The Mplus models are in the folder [Mplus models](https://github.com/alex-cernat/MTME-MM/tree/master/Mplus%20models).
 
 `r pander(sessionInfo())`
 
