@@ -124,14 +124,14 @@ res_std_long$Variance <- res_std_long$std_coef^2
 
 # graph by wave and form
 res_std_long %>%
-  group_by(model, Component) %>%
+  group_by(wave, Component) %>%
   summarise(Variance = mean(Variance)) %>%
-  group_by(model) %>%
+  group_by(wave) %>%
   mutate(Variance = Variance/sum(Variance)) %>%
-  ggplot(aes(model, Variance, fill = Component )) +
+  ggplot(aes(wave, Variance, fill = Component )) +
   geom_bar(stat = "identity") +
   scale_fill_brewer(palette = "Accent") + theme_minimal(base_family = "Sans") +
-  xlab("") + ylab("Proportion of variance explained") +
+  xlab("Wave") + ylab("Proportion of variance explained") +
   theme(plot.margin = unit(c(0.5, 2, 0.5, 0.5),"cm")) +
   scale_y_continuous(breaks = c(0, 0.5, 1), labels = c("0", "0.5", "1"))
 
